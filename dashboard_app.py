@@ -254,7 +254,9 @@ PAGES = [
     "Capacity Planning",
     "Multi-Region Compare",
     "Alerts",
+    "Chatbot",  # 👈 new page
 ]
+
 
 if "active_page" not in st.session_state:
     st.session_state["active_page"] = "Overview"
@@ -289,8 +291,10 @@ with st.sidebar:
         ("Capacity Planning", "🏗️"),
         ("Multi-Region Compare", "🧭"),
         ("Alerts", "🚨"),
+        ("Chatbot", "💬"),  # 👈 new
     ]:
         nav_button(label, icon)
+
 
 # -----------------------------------------------------------------------------
 # MAIN HEADER
@@ -306,6 +310,79 @@ st.markdown(
 )
 
 active_page = st.session_state["active_page"]
+
+def simple_chatbot_reply(message: str) -> str:
+    """
+    Very simple rule-based chatbot reply.
+    You can customize responses as you like.
+    """
+    msg = message.lower()
+
+    # A few smart, project-specific replies
+    if "overview" in msg or "home" in msg:
+        return (
+            "The **Overview** page shows global KPIs (peak CPU, max storage, peak users) "
+            "and 30-day mini trends. Use it to quickly understand overall system load."
+        )
+    if "trend" in msg or "time series" in msg:
+        return (
+            "The **Trends** page lets you analyze time-series behaviour. You can pick a metric "
+            "(CPU, Storage, Users), filter by region/resource, and select a time window like last 7/30/90 days."
+        )
+    if "regional" in msg or "region" in msg:
+        return (
+            "The **Regional** page compares regions on CPU, storage and users. "
+            "You can see which Azure region is hottest and download the regional summary as CSV."
+        )
+    if "resource" in msg or "compute" in msg or "storage" in msg:
+        return (
+            "The **Resources** page focuses on resource types like compute/storage. "
+            "It aggregates metrics per resource type and lets you filter by region."
+        )
+    if "user" in msg or "active users" in msg or "engagement" in msg:
+        return (
+            "The **User Activity** page shows daily active users, top regions by engagement, "
+            "and spike events. It’s useful to see how user load maps to CPU and storage usage."
+        )
+    if "forecast" in msg:
+        return (
+            "On the **Forecasting** page, select metric, model, region and service, then click "
+            "‘Run Forecast’. The chart shows historical values plus the predicted curve with an optional confidence band."
+        )
+    if "capacity" in msg or "planning" in msg:
+        return (
+            "The **Capacity Planning** page compares forecasted demand vs available capacity and generates recommendations "
+            "like how many more units to add per region/service."
+        )
+    if "multi region" in msg or "compare" in msg:
+        return (
+            "The **Multi-Region Compare** page lets you pick multiple regions and compare them via a radar chart "
+            "and time-series plot for CPU, storage or users."
+        )
+    if "alert" in msg or "threshold" in msg or "risk" in msg:
+        return (
+            "The **Alerts** page checks the next 7-day forecast against a threshold and flags regions as Safe, Near limit, "
+            "or High risk. You can also configure a dummy email notification preference."
+        )
+    if "download" in msg or "csv" in msg or "export" in msg:
+        return (
+            "Most pages include a **Download** button that exports the currently filtered data or summary as a CSV file. "
+            "Use those exports to include tables in your report or PPT."
+        )
+    if "which model" in msg or "best model" in msg:
+        return (
+            "The backend compares models like ARIMA, XGBoost and LSTM using metrics such as MAE/RMSE/MAPE. "
+            "In the UI, you can switch models on the Forecasting page via the ‘Model’ dropdown."
+        )
+
+    # Default answer
+    return (
+        "I’m a simple built-in assistant for this dashboard. You can ask me about:\n"
+        "- What each page shows (Overview, Trends, Regional, Resources, Forecasting, Capacity, Alerts, etc.)\n"
+        "- How filters work (region, resource type, horizon)\n"
+        "- How to explain charts and KPIs in your viva or presentation."
+    )
+
 
 # -----------------------------------------------------------------------------
 # PAGE: OVERVIEW  (includes redesigned Data Explorer)
@@ -1561,3 +1638,46 @@ elif active_page == "Alerts":
                             st.warning("Please enter a valid email.")
 
     st.markdown("</div>", unsafe_allow_html=True)
+
+# -----------------------------------------------------------------------------
+# PAGE: CHATBOT (UI Assistant)
+# -----------------------------------------------------------------------------
+elif active_page == "Chatbot":
+    st.markdown('<div class="section-card">', unsafe_allow_html=True)
+    st.markdown("### 💬 Dashboard Assistant")
+
+    st.caption(
+        "Ask questions about what each page shows, how filters work, or how to explain metrics in your viva."
+    )
+
+    # Initialize chat history
+    if "chat_history" not in st.session_state:
+        st.session_state["chat_history"] = []
+
+    # Show existing messages
+    for msg in st.session_state["chat_history"]:
+        with st.chat_message(msg["role"]):
+            st.markdown(msg["content"])
+
+    # Chat input at the bottom
+    user_msg = st.chat_input("Ask something about the dashboard or metrics...")
+    if user_msg:
+        # Add user message
+        st.session_state["chat_history"].append(
+            {"role": "user", "content": user_msg}
+        )
+
+        # Generate answer
+        reply = simple_chatbot_reply(user_msg)
+
+        # Add assistant message
+        st.session_state["chat_history"].append(
+            {"role": "assistant", "content": reply}
+        )
+
+        # Display assistant reply immediately
+        with st.chat_message("assistant"):
+            st.markdown(reply)
+
+    st.markdown("</div>", unsafe_allow_html=True)
+
