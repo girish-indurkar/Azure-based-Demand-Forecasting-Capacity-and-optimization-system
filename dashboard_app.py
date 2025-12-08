@@ -1306,7 +1306,7 @@ elif active_page == "Forecasting":
         with col2:
             model = st.selectbox(
                 "Model",
-                ["best", "arima", "xgboost", "lstm"],
+                ["best", "arima", "lightgbm", "lstm"],
                 key="fc_model",
             )
         with col3:
