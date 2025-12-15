@@ -1,331 +1,174 @@
-# Azure Batch Forecasting System - Backend Team B
+# **Azure Demand Forecasting & Capacity Optimization System**
 
-A comprehensive machine learning pipeline for forecasting Azure cloud resource demand with interactive dashboarding and RAG chatbot capabilities.
 
-## 🎯 Project Overview
+**An 8-week Infosys Springboard virtual internship project developed by Batch 4 Team B, following an agile methodology, to forecast demand and optimize capacity in Azure environments**
 
-This project provides an intelligent forecasting system for Azure cloud resource utilization across multiple regions and resource types. It combines:
+## Table of Contents
 
-- **Data Processing Pipeline**: Clean and feature-engineer raw Azure usage data
-- **ML Model Training**: ARIMA, XGBoost, and LSTM models for time-series forecasting
-- **REST API Backend**: Flask-based API for serving predictions and analytics
-- **Interactive Dashboard**: Streamlit-powered UI with real-time visualizations
-- **RAG Chatbot**: LLM-powered chatbot with Ollama integration for intelligent queries
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Quick Start](#quick-start)
+- [Milestones](#milestones)
+- [Project Structure](#project-structure)
+- [Team Members](#team-members)
+- [License](#license)
 
-## 📋 Project Structure
+##  Project Overview
 
-```
-.
-├── backend_app.py                 # Flask REST API (data endpoints & forecasting)
-├── dashboard_app.py               # Streamlit dashboard with chatbot integration
-├── model_training_pipeline.py     # ML pipeline with ARIMA/XGBoost/LSTM models
-├── optimised_backend_app.py       # Optimized FastAPI server alternative
-├── start_pipeline.py              # Service starter script
-├── requirements.txt               # Python dependencies
-│
-├── data/
-│   ├── raw/                       # Original Azure usage data
-│   │   ├── azure_usage.csv
-│   │   └── external_factors.csv
-│   │
-│   └── processed/                 # Cleaned and feature-engineered data
-│       ├── cleaned_merged.csv
-│       ├── feature_importance.csv
-│       ├── final_featured_dataset.csv
-│       ├── xgboost_test_results.csv
-│       │
-│       └── featured-dataset-specific models/
-│           ├── dataset_for_arima.csv
-│           ├── dataset_for_lstm.csv
-│           └── dataset_for_xgboost.csv
-│
-├── models/                        # Trained ML models
-│   ├── cpu_forecasting_models/
-│   │   └── SoutheastAsia_LSTMmodel_cpu.h5
-│   ├── storage_forecasting_models/
-│   └── users_active_forecasting_models/
-│       └── EastUS_LSTMmodel_users.h5
-│
-├── notebooks/                     # Jupyter notebooks for analysis & experiments
-│   ├── azure_correlation_analysis.csv
-│   ├── azure_daily_summary.csv
-│   └── notebook files/
-│       ├── Milestone_01_Data_cleaning.ipynb
-│       ├── Milestone_01_Basic_Exploratory_Analysis_and_Visualization.ipynb
-│       ├── Milestone_02_Feature_Engineering.ipynb
-│       ├── Milestone_03_modeling.ipynb
-│       ├── Milestone_04_Forecast_Integration_&_Capacity_Planning.ipynb
-│       ├── approach_1_model_Training_and_Evalution.ipynb
-│       ├── approach_2_model_Training_and_Evalution.ipynb
-│       ├── approach_3.ipynb
-│       ├── improved_active_users_model_training.ipynb
-│       ├── improved_cpu-usage_model_Training_and_Evalution.ipynb
-│       └── advanced_visualisation.ipynb
-│
-├── scripts/                       # Utility scripts
-│   ├── EDA.py                     # Exploratory Data Analysis
-│   └── utils.py                   # Utility functions
-│
-└── README.md                      # This file
-```
+This project, developed by **AZURE_BATCH-4_BACKEND_TEAM_B**, is a part of a virtual internship completed over 8 weeks. The **Azure Demand Forecasting & Capacity Optimization System** forecasts demand for Azure services and optimizes resource allocation to assist the Azure Supply Chain team in making data-driven infrastructure decisions.
 
-## 🚀 Quick Start
+The project follows an **Agile methodology**, with remote collaboration in sprints, achieving four significant milestones.
+
+##  Features
+
+- **Interactive Dashboards:** Visualize resource usage trends, regional insights, and user activity with interactive charts and graphs. 📈
+- **Capacity Planning:** Forecast future resource needs based on historical data and selected parameters. 🔮
+- **Model Comparison:** Compare the performance of different forecasting models using various metrics. ⚖️
+- **Alerting System:** Configure alert thresholds and receive notifications when forecasted usage exceeds those thresholds. 🚨
+- **Chatbot Integration:** Ask questions about resource usage, predictions, regions, anomalies, or capacity planning using a conversational interface. 🤖
+- **Multi-Region Comparison:** Compare resource usage metrics across different regions and services. 🌍
+- **User Activity Monitoring:** Track user activity and resource consumption patterns. 👤
+- **Data Download:** Download raw data in CSV format for further analysis. ⬇️
+- **Theme Support:** Supports both light and dark themes. ☀️/🌙
+
+##  Tech Stack
+
+*   **Frontend:**
+    *   Next.js: React framework for building the user interface.
+    *   React: JavaScript library for building user interfaces.
+    *   TypeScript: Superset of JavaScript that adds static typing.
+    *   Recharts: A composable charting library built on React.
+    *   Lucide React: Beautifully simple icons.
+    *   Shadcn UI: Re-usable components built using Radix UI and Tailwind CSS.
+    *   next-themes: For theme management (dark mode).
+*   **Backend:**
+    *   Flask: Python web framework for creating the API.
+    *   Python: Programming language for backend logic.
+*   **Data Analysis & Dependencies (Backend):**
+    *   pandas: Data manipulation and analysis.
+    *   numpy: Numerical operations.
+    *   python-dateutil: Date parsing.
+    *   pytz: Timezone handling.
+*   **Database:**
+    *   CSV files: Data is loaded from CSV files.
+*   **Other:**
+    *   CORS: For handling Cross-Origin Resource Sharing.
+    *   pip: Python package installer.
+    *   npm or yarn: JavaScript package manager.
+
+## Quick Start
 
 ### Prerequisites
-
-- Python 3.8+
-- pip or conda
-- Ollama for RAG chatbot functionality
+- **Node.js**: `^18.17.0` or later.
+- **npm**: `^9.6.7` or later.
+- **Git**: To clone the repository.
+- **(Optional) PowerShell**: For running development scripts.
 
 ### Installation
 
-1. **Clone/Setup the repository**
-   ```bash
-   cd AZURE_BATCH-4_BACKEND_TEAM_B-main
-   ```
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/springboard1233/AZURE_BATCH-4_BACKEND_TEAM_B.git
+    cd AZURE_BATCH-4_BACKEND_TEAM_B
+    ```
 
-2. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+2. Install dependencies:
+    ```bash
+    npm install
+    ```
 
-3. **Prepare data** (ensure data files are in `data/` directory)
-   - Place raw Azure data in `data/raw/`
-   - Or generate processed data through the pipeline
+3. Set up the environment:
+    ```bash
+    cp .env.example .env # Or create an empty .env file and configure your environment variables.
+    ```
 
-### Running the System
+4. Start the development server:
+    ```bash
+    npm run dev
+    ```
 
-#### Option 1: Start All Services
-```bash
-python start_pipeline.py
+5. Open your browser and visit `http://localhost:3000`.
+
+## Milestones
+
+| **Milestone** | **Duration** | **Module**                      | **Objective**                                          | **Key Tasks**                                                                                                                                     |
+|---------------|--------------|----------------------------------|--------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| Milestone 1   | Weeks 1-2    | Data Collection & Preparation    | Collect and prepare datasets for modeling              | Gather Azure usage data, clean and validate datasets, source external data, and ensure consistency in data formats.                               |
+| Milestone 2   | Weeks 3-4    | Feature Engineering & Data Wrangling | Prepare the dataset for machine learning models        | Identify demand-driving features, engineer derived features (seasonality, spikes, etc.), and ensure dataset consistency and readiness for models. |
+| Milestone 3   | Weeks 5-6    | Machine Learning Model Development | Develop and validate forecasting models                | Train and validate multiple ML models (ARIMA, XGBoost, etc.), optimize based on performance metrics, and select the best model for production.    |
+| Milestone 4   | Weeks 7-8    | Forecast Integration & Capacity Planning | Integrate forecasting system into Azure’s ecosystem    | Deploy models, integrate with capacity planning dashboards, automate reporting, and establish monitoring pipelines.                              |
+
+## Project Structure
+
+```
+├── BACKEND/
+│   ├── app.py             # Flask backend application
+│   ├── requirements.txt   # Python dependencies
+│   └── ...
+├── app/
+│   ├── alerts/
+│   │   └── page.tsx       # Alerts page
+│   ├── capacity-planning/
+│   │   └── page.tsx       # Capacity planning page
+│   ├── chatbot/
+│   │   └── page.tsx       # Chatbot page
+│   ├── compare/
+│   │   └── page.tsx       # Model comparison page
+│   ├── forecasting/
+│   │   └── page.tsx       # Forecasting page
+│   ├── multi-region/
+│   │   └── page.tsx       # Multi-region comparison page
+│   ├── regional/
+│   │   └── page.tsx       # Regional insights page
+│   ├── resources/
+│   │   └── page.tsx       # Resource trends page
+│   ├── user-activity/
+│   │   └── page.tsx       # User activity dashboard page
+│   ├── layout.tsx         # Root layout for the application
+│   ├── page.tsx           # Main dashboard page
+│   └── ...
+├── components/
+│   ├── dashboard/
+│   │   ├── dashboard-header.tsx # Dashboard header component
+│   │   ├── kpi-card.tsx       # KPI card component
+│   │   ├── sidebar.tsx        # Sidebar component
+│   │   └── trend-chart.tsx    # Trend chart component
+│   ├── ui/                # UI components (Shadcn UI)
+│   │   ├── button.tsx
+│   │   ├── card.tsx
+│   │   ├── select.tsx
+│   │   └── ...
+│   └── theme-provider.tsx   # Theme provider component
+├── lib/
+│   └── api.ts             # API functions for fetching data
+├── public/
+│   └── ...
+├── styles/
+│   └── globals.css        # Global CSS styles
+├── next.config.mjs      # Next.js configuration file
+├── tsconfig.json        # TypeScript configuration file
+├── package.json         # Project dependencies and scripts
+└── README.md            # This file
 ```
 
-This starts:
-- Backend API server (Flask) on `http://localhost:5000`
-- Model training scheduler in the background
 
-#### Option 2: Run Components Individually
+## Team Members
 
-**1. Backend API Server:**
-```bash
-python backend_app.py
-# API available at http://localhost:5000/api
-```
+This project was completed as part of a virtual internship by **Batch 4 Team B**. Below are the team members and their GitHub profiles:
 
-**2. Dashboard (in another terminal):**
-```bash
-streamlit run dashboard_app.py
-# Dashboard available at http://localhost:8501
-```
+- **[Yash06-blip](https://github.com/Yash06-blip)**  
+- **[ChidviReddy](https://github.com/ChidviReddy)**  
+- **[Himanshu-mali](https://github.com/Himanshu-mali)**  
+- **[vaishnavikatare](https://github.com/vaishnavikatare)**
+- **[vaishnavisxngh](https://github.com/vaishnavisxngh)**  
+- **[girish-indurkar](https://github.com/girish-indurkar)**  
+- **[Shravika-0212](https://github.com/Shravika-0212)**  
 
-**3. Model Training Pipeline (optional):**
-```bash
-python model_training_pipeline.py
-```
+## License
 
-## 📊 Key Components
+This project is licensed under the [MIT License](LICENSE.txt) - see the [LICENSE.txt](LICENSE.txt) file for details.
 
-### 1. Backend API (`backend_app.py`)
 
-Flask REST API providing:
-- **Data Endpoints**: Historical data retrieval with filtering
-- **Forecast Endpoints**: Predictions for CPU, storage, and active users
-- **Analytics Endpoints**: KPIs, trends, and capacity planning
-- **CORS Support**: Cross-origin requests for frontend compatibility
 
-**Key Routes:**
-- `GET /api/data` - Retrieve historical data
-- `GET /api/forecast` - Get predictions
-- `GET /api/kpis` - Performance metrics
-- `GET /api/capacity-planning` - Capacity recommendations
 
-### 2. Dashboard (`dashboard_app.py`)
-
-Streamlit interactive dashboard featuring:
-- **Multiple Tabs**: Overview, detailed analytics, forecasting, capacity planning
-- **Real-time Visualizations**: Plotly charts for insights
-- **Data Filters**: Region, resource type, date range selections
-- **RAG Chatbot**: LLM-powered Q&A with local Ollama integration
-- **Export Features**: Download filtered data and reports
-
-### 3. Model Training Pipeline (`model_training_pipeline.py`)
-
-Intelligent ML pipeline with:
-- **Multiple Models**: ARIMA, XGBoost, LSTM
-- **Automatic Model Selection**: Chooses best-performing model per metric
-- **Cross-validation**: Ensures model reliability
-- **Scheduling**: Automated retraining on schedule
-- **Metrics Tracking**: Comprehensive evaluation and logging
-
-**Supported Models:**
-- **ARIMA**: Statistical time-series forecasting
-- **XGBoost**: Gradient boosting for high-accuracy predictions
-- **LSTM**: Deep learning for complex temporal patterns
-
-### 4. Data Processing
-
-**Raw Data → Processing Flow:**
-1. Data Cleaning (Milestone 1)
-   - Handle missing values
-   - Remove outliers
-   - Format standardization
-
-2. Feature Engineering (Milestone 2)
-   - Create temporal features
-   - Lag features for historical context
-   - External factor integration
-
-3. Model-Specific Preparation
-   - Scaled data for neural networks
-   - Stationarized data for ARIMA
-   - Proper format for XGBoost
-
-## 🔧 Configuration
-
-### Environment Variables
-
-Create a `.env` file in the root directory:
-
-```env
-# Backend
-FLASK_HOST=localhost
-FLASK_PORT=5000
-
-# Dashboard
-STREAMLIT_PORT=8501
-
-# Ollama (for RAG chatbot)
-OLLAMA_URL=http://localhost:11434
-OLLAMA_MODEL=mistral
-USE_OLLAMA_EMBEDDINGS=false
-
-# Data paths (optional, defaults provided)
-DATA_DIR=./data/processed
-MODEL_DIR=./models
-```
-
-### Model Training Configuration
-
-In `model_training_pipeline.py`, adjust:
-- Data paths for your environment
-- Retraining schedule
-- Model hyperparameters
-- Logging directory
-
-## 📈 Forecasting Metrics
-
-The system tracks:
-- **MAE (Mean Absolute Error)**: Average prediction deviation
-- **RMSE (Root Mean Squared Error)**: Penalizes larger errors
-- **MAPE (Mean Absolute Percentage Error)**: Percentage accuracy
-- **Model Performance Scores**: Comparative rankings
-
-## 💬 RAG Chatbot Features
-
-When Ollama is configured:
-- Ask natural language questions about Azure usage
-- Get insights from historical data
-- Receive forecasting explanations
-- Capacity planning recommendations
-
-**Requirements:**
-- Ollama running locally (`http://localhost:11434`)
-- Model downloaded (e.g., `ollama pull mistral`)
-
-## 📚 Jupyter Notebooks
-
-Explore the analysis journey through:
-
-- **Milestone 01**: Data cleaning and initial exploration
-- **Milestone 02**: Feature engineering techniques
-- **Milestone 03**: Model development and comparison
-- **Milestone 04**: Forecasting integration and capacity planning
-- **Approach Files**: Different modeling strategies (1, 2, 3)
-- **Specialized Notebooks**: LSTM and CPU usage model improvements
-
-## 🔍 API Usage Examples
-
-### Get Historical Data
-```bash
-curl "http://localhost:5000/api/data?region=EastUS&start_date=2023-01-01&end_date=2023-12-31"
-```
-
-### Get Forecast
-```bash
-curl "http://localhost:5000/api/forecast?region=EastUS&days_ahead=30"
-```
-
-### Get KPIs
-```bash
-curl "http://localhost:5000/api/kpis?region=EastUS"
-```
-
-## 🛠 Troubleshooting
-
-### Port Already in Use
-```bash
-# Find and kill process using port 5000
-netstat -ano | findstr :5000
-taskkill /PID <PID> /F
-```
-
-### Missing Data Files
-- Ensure `data/raw/` contains Azure usage data
-- Run data cleaning pipeline first
-- Check file paths in configuration
-
-### Ollama Connection Issues
-- Verify Ollama is running: `curl http://localhost:11434/api/tags`
-- Check firewall settings
-- Ensure correct model is downloaded
-
-### Model Loading Errors
-- Verify TensorFlow/Keras versions match training environment
-- Check `.h5` model files exist in `models/` directory
-- Rebuild models if incompatible versions
-
-## 📦 Dependencies
-
-Core packages:
-- **Streamlit**: Interactive dashboard
-- **Flask**: REST API server
-- **Pandas/NumPy**: Data processing
-- **Scikit-learn**: ML utilities
-- **TensorFlow/Keras**: LSTM models
-- **XGBoost**: Gradient boosting
-- **Statsmodels**: ARIMA implementation
-- **Plotly**: Interactive visualizations
-- **Requests**: HTTP communication
-- **python-dotenv**: Environment configuration
-
-See `requirements.txt` for complete list and versions.
-
-## 👥 Team Information
-
-**Project**: Azure Batch Forecasting System
-**Team**: Backend Team B
-**Context**: Infosys Springboard M4 Project
-
-## 📝 License
-
-[Specify your project license here]
-
-## 🤝 Contributing
-
-1. Create a feature branch
-2. Make your changes
-3. Test with provided notebooks
-4. Submit results
-
-## 📞 Support
-
-For issues or questions:
-1. Check the troubleshooting section
-2. Review relevant Jupyter notebooks
-3. Check API logs in `pipelogs` directory
-4. Verify data files and model paths
-
----
-
-**Last Updated**: December 2025
-**Version**: 1.0
