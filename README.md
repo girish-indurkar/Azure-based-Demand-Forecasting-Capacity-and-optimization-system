@@ -157,17 +157,18 @@ The project follows an **Agile methodology**, with remote collaboration in sprin
 
 This project was completed as part of a virtual internship by **Batch 4 Team B**. Below are the team members and their GitHub profiles:
 
+- **[girish-indurkar](https://github.com/girish-indurkar)**
 - **[Yash06-blip](https://github.com/Yash06-blip)**  
 - **[ChidviReddy](https://github.com/ChidviReddy)**  
 - **[Himanshu-mali](https://github.com/Himanshu-mali)**  
 - **[vaishnavikatare](https://github.com/vaishnavikatare)**
-- **[vaishnavisxngh](https://github.com/vaishnavisxngh)**  
-- **[girish-indurkar](https://github.com/girish-indurkar)**  
+- **[vaishnavisxngh](https://github.com/vaishnavisxngh)**    
 - **[Shravika-0212](https://github.com/Shravika-0212)**  
 
 ## License
 
 This project is licensed under the [MIT License](LICENSE.txt) - see the [LICENSE.txt](LICENSE.txt) file for details.
+
 
 
 
